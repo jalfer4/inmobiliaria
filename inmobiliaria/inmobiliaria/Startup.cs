@@ -35,7 +35,7 @@ namespace inmobiliaria
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            var connectionString = "Data Source=192.168.65.59;Initial Catalog=DbInmobiliaria;User ID=InmobiliariaAdm;Password=1q2w3e4r%T";
+            var connectionString = "Data Source=192.168.*.*;Initial Catalog=*;User ID=*;Password=*";
             services.AddDbContext<MyDbContext>(options => options.UseSqlServer(connectionString));
         }
 
