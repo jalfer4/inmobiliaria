@@ -37,7 +37,7 @@
             <div class="form-group">
                 <label class="control-label">Alquileres</label>
                 <select class="form-control" name="AlquilerId">
-                    @foreach (var item in (IList<Alquiler>)ViewBag.Propietarios)
+                    @foreach (var item in (IList<Alquiler>)ViewBag.Alquileres)
                     {
                         @:<option @(item.AlquilerId == Model.AlquilerId ? "selected" : "") value="@item.AlquilerId">@(item.AlquilerId + " " + item.Descripcion)</option>
                     }
