@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Inmobiliaria_.Net_Core.Models
 {
-	public class RepositorioGarante : RepositorioBase, IRepositorio<Garante>
+    public class RepositorioGarante : RepositorioBase, IRepositorioGarante      
 	{
 		public RepositorioGarante(IConfiguration configuration) : base(configuration)
 		{

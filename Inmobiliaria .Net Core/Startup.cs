@@ -63,9 +63,14 @@ namespace Inmobiliaria_.Net_Core
             services.AddTransient<IRepositorio<Alquiler>, RepositorioAlquiler>();
             services.AddTransient<IRepositorioAlquiler, RepositorioAlquiler>();
 
-            services.AddTransient<IRepositorio<Inquilino>, RepositorioInquilino>();
-            services.AddTransient<IRepositorio<Garante>, RepositorioGarante>();
             services.AddTransient<IRepositorio<Inmueble>, RepositorioInmueble>();
+            services.AddTransient<IRepositorioInmueble, RepositorioInmueble>();
+
+            services.AddTransient<IRepositorio<Inquilino>, RepositorioInquilino>();
+            services.AddTransient<IRepositorioInquilino, RepositorioInquilino>();
+
+            services.AddTransient<IRepositorio<Garante>, RepositorioGarante>();
+            services.AddTransient<IRepositorioGarante, RepositorioGarante>();
 
             services.AddDbContext<DataContext>(options => options.UseSqlServer(configuration["ConnectionStrings:DefaultConnection"]));
 

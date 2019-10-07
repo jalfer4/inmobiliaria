@@ -8,8 +8,9 @@ using System.Threading.Tasks;
 
 namespace Inmobiliaria_.Net_Core.Models
 {
-	public class RepositorioInquilino : RepositorioBase, IRepositorio<Inquilino>
-	{
+	 
+         public class RepositorioInquilino : RepositorioBase, IRepositorioInquilino
+    {
 		public RepositorioInquilino(IConfiguration configuration) : base(configuration)
 		{
 			

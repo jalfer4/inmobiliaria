@@ -12,10 +12,16 @@ namespace Inmobiliaria_.Net_Core.Controllers
     public class AlquilerController : Controller
     {
         private readonly IRepositorio<Alquiler> repositorio;
-
-        public AlquilerController(IRepositorio<Alquiler> repositorio)
+        private readonly IRepositorioInmueble repoInmuebles;
+        private readonly IRepositorioInquilino repoInquilinos;
+        private readonly IRepositorioGarante repoGarantes;
+        public AlquilerController(IRepositorioAlquiler repositorio, IRepositorioInmueble repoInmuebles, IRepositorioInquilino repoInquilinos, IRepositorioGarante repoGarantes)
+     
         {
             this.repositorio = repositorio;
+            this.repoInmuebles = repoInmuebles;
+            this.repoInquilinos = repoInquilinos;
+            this.repoGarantes = repoGarantes;
         }
 
         // GET: Alquiler
@@ -30,12 +36,17 @@ namespace Inmobiliaria_.Net_Core.Controllers
         // GET: Alquiler/Details/5
         public ActionResult Details(int id)
         {
+            ViewBag.Inmuebles = repoInmuebles.ObtenerTodos();
             return View();
         }
 
         // GET: Alquiler/Create
         public ActionResult Create()
         {
+
+            ViewBag.Inmuebles = repoInmuebles.ObtenerTodos();
+            ViewBag.Inquilinos = repoInquilinos.ObtenerTodos();
+            ViewBag.Garantes = repoGarantes.ObtenerTodos();
             return View();
         }
 
@@ -45,14 +56,24 @@ namespace Inmobiliaria_.Net_Core.Controllers
         public ActionResult Create(Alquiler alquiler)
         {
             try
-            { 
-                    return View();
+            {
+                if (ModelState.IsValid)
+                {
+                    repositorio.Alta(alquiler);
+                    TempData["Id"] = alquiler.AlquilerId;
+                    return RedirectToAction(nameof(Index));
+                }
+                else
+                {
+                    ViewBag.Alquileres = repositorio.ObtenerTodos();
+                    return View(alquiler);
+                }
             }
             catch (Exception ex)
             {
                 ViewBag.Error = ex.Message;
                 ViewBag.StackTrate = ex.StackTrace;
-                return View();
+                return View(alquiler);
             }
         }
 
@@ -118,17 +139,19 @@ namespace Inmobiliaria_.Net_Core.Controllers
         // POST: Propietario/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, Alquiler miAlquiler)
         {
             try
             {
-                // TODO: Add delete logic here
-
+                repositorio.Baja(id);
+                TempData["Mensaje"] = "Eliminación realizada correctamente";
                 return RedirectToAction(nameof(Index));
             }
-            catch
+            catch (Exception ex)
             {
-                return View();
+                ViewBag.Error = ex.Message;
+                ViewBag.StackTrate = ex.StackTrace;
+                return View(miAlquiler);
             }
         }
     }
